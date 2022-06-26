@@ -1,0 +1,182 @@
+<!-- 2.	Create a table called  item with itemno integer, primary key, itemname varchar(15), price integer, category varchar(15)
+a.	Demonstrate 
+i.	Insert
+ii.	Update  -- category and price
+iii.Multi select – query on category
+iv.	Single select  -- query on itemno. -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Items-Insert, Update, Single & Multi Select</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+        $(() => {
+            console.log("Page Loaded");
+
+            $("#inum").blur(() => {
+                console.log("Blur event");
+                let x = $("#inum").val();
+                $("#catlist").html("");
+
+                let ajaxParameters = {
+                    data: { inum: x },
+                    url: "http://localhost:90/getItem",
+                    type: 'get',
+                    datatype: "json",
+                    success: (output) => {
+                        if (output.status) {
+                            $("#name").val(output.row.ITEMNAME);
+                            $("#price").val(output.row.PRICE);
+                            $("#cat").val(output.row.CATEGORY);
+                            $("#msg").text("Item No: " + x + " found");
+                            console.log("Data displayed");
+                        } else {
+                            $("#name").val("");
+                            $("#price").val("");
+                            $("#cat").val("");
+                            $("#msg").text("Item No: " + x + " not found");
+                        }
+                    },
+                    error: (error) => {
+                        $("#inum").val("");
+                        $("#name").val("");
+                        $("#price").val("");
+                        $("#cat").val("");
+                        console.log(error);
+                        $("#msg").text("Error");
+                    }
+                };
+                $.ajax(ajaxParameters);
+            });
+
+
+            $("#insert").click(() => {
+                let x = $("#inum").val();
+                let n = $("#name").val();
+                let p = $("#price").val();
+                let c = $("#cat").val();
+                $("#catlist").html("");
+
+                let ajaxParameters = {
+                    data: { inum: x, name: n, price: p, cat: c },
+                    url: "http://localhost:90/insert",
+                    type: "get",
+                    datatype: "json",
+                    success: (output) => {
+                        if (output.status) {
+                            $("#msg").text("Item No: " + x + " inserted successfully");
+                        } else {
+                            $("#msg").text("Item No: " + x + " already exist, choose other item no");
+                        }
+                    },
+                    error: (error) => {
+                        $("#msg").text("Server Error");
+                        console.log("Cannot connect to data base ERROR");
+                    }
+                };
+                $.ajax(ajaxParameters);
+            });
+
+
+            $("#update").click(() => {
+                let x = $("#inum").val();
+                let n = $("#name").val();
+                let p = $("#price").val();
+                let c = $("#cat").val();
+                $("#catlist").html("");
+
+                let ajaxParameters = {
+                    data: { inum: x, name: n, price: p, cat: c },
+                    url: "http://localhost:90/update",
+                    type: "get",
+                    datatype: "json",
+                    success: (output) => {
+                        if (output.status) {
+                            $("#msg").text("Item No: " + x + " updated successfully");
+                        } else if (output.status != true) {
+                            $("#inum").val("");
+                            $("#name").val("");
+                            $("#price").val("");
+                            $("#cat").val("");
+                            $("#msg").text("Item No: " + x + " does not exist for updation");
+                        }
+                    },
+                    error: (error) => {
+                        $("#msg").text("Server Error");
+                        console.log("Cannot connect to data base ERROR");
+                    }
+                };
+                $.ajax(ajaxParameters);
+            });
+
+
+            $("#category").click(() => {
+                let c = $("#cat").val();
+                while (c == null) {
+                    $("#msg").text("Please enter a category first");
+                }
+
+                let ajaxParameters = {
+                    data: { cat: c },
+                    url: "http://localhost:90/cat",
+                    type: "get",
+                    datatype: "json",
+                    success: (output) => {
+                        $("#inum").val("");
+                        $("#name").val("");
+                        $("#price").val("");
+                        if (output.status) {
+                            $("#msg").text("Category found with " + output.rows.length + " items");
+                            let cont = "";
+                            for (let i = 0; i < output.rows.length; i++) {
+                                cont += "<br/>" + output.rows[i].ITEMNO + "--" + output.rows[i].ITEMNAME + "--" + output.rows[i].PRICE + "--" + output.rows[i].CATEGORY;
+                            }
+                            $("#catlist").html(cont);
+                        } else {
+                            $("#msg").text("Category does not exist");
+                            $("#catlist").html("");
+                        }
+                    },
+                    error: (error) => {
+                        $("#msg").text("Server Error");
+                        console.log("Cannot connect to data base ERROR");
+                    }
+                };
+                $.ajax(ajaxParameters);
+            });
+
+
+
+        });
+
+    </script>
+</head>
+
+
+<body style="margin: 20px 50px">
+    <p>2. Create a table called item with itemno integer, primary key, itemname varchar(15), price integer, category
+        varchar(15)</p>
+    <p>a. Demonstrate </p>
+    <p>i. Insert</p>
+    <p>ii. Update -- category and price</p>
+    <p>iii.Multi select – query on category</p>
+    <p>iv. Single select -- query on itemno.</p>
+    <br><br>
+    <hr><br><br>
+    <input type="text" placeholder="Item Number" id="inum">
+    <span id="msg"></span><br><br>
+    <input type="text" placeholder="Item Name" id="name"><br><br>
+    <input type="text" placeholder="Item Price" id="price"><br><br>
+    <input type="text" placeholder="Item Category" id="cat"><br><br>
+    <input type="button" value="INSERT" id="insert">
+    <input type="button" value="UPDATE ITEM" id="update">
+    <input type="button" value="SHOW ALL FROM CATEGORY" id="category"><br><br>
+    <span id="catlist"></span>
+</body>
+
+</html>

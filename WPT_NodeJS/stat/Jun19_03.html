@@ -1,0 +1,82 @@
+<html>
+<html lang="en">
+
+<head>
+    <title>Location Enquiry</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+        $(() => {
+            console.log("Page load success");
+
+            $("#pin").blur(() => {
+                let x = $("#pin").val();
+
+                let ajaxParameters = {
+                    data: { pin: x },
+                    url: "http://localhost:80/getItem",
+                    type: 'get',
+                    dataType: "json",
+                    success: (output) => {
+                        console.log(output);
+                        if (output.status) {
+                            console.log("Item acquired from server: ", output.row);
+                            $("#area").val(output.row.AREA);
+                            $("#msg").text("Pincode Located!");
+                        } else {
+                            console.log("Item not acquired from server");
+                            $("#pin").val("");
+                            $("#area").val("");
+                            $("#msg").text("Pincode " + x + " not found");
+                        }
+                    },
+                    error: (error) => {
+                        console.log("Error from server: ", error);
+                        $("#msg").val("Could not connect to server");
+                    }
+                };
+                $.ajax(ajaxParameters);
+            });
+
+
+            $("#update").click(() => {
+                console.log("click event");
+                let x = $("#pin").val();
+                let y = $("#area").val();
+
+                let ajaxParameters = {
+                    data: { pin: x, area: y },
+                    url: "http://localhost:80/update",
+                    type: 'get',
+                    dataType: "json",
+                    success: (output) => {
+                        console.log(output);
+                        if (output.status) {
+                            $("#pin").val("");
+                            $("#area").val("");
+                            $("#msg").text("Pincode updated");
+                        } else {
+                            $("#msg").text("Pincode not found");
+                        }
+                    },
+                    error: (error) => {
+                        console.log("Error from server: ", error);
+                        $("#msg").val(error);
+                    }
+                };
+                $.ajax(ajaxParameters);
+
+
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <br /><br />
+    <input type="text" name="" id="pin" placeholder="Pincode"><br /><br />
+    <input type="text" name="" id="area" placeholder="Area"><br />
+    <input type="button" value="update" id="update">
+    <p id="msg"></p>
+</body>
+
+</html>

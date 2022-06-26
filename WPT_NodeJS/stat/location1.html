@@ -1,0 +1,53 @@
+<html>
+<html lang="en">
+
+<head>
+
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+        $(() => {
+            console.log("Page load success");
+
+            $("#pin").blur(() => {
+                let x = $("#pin").val();
+
+                let ajaxParameters = {
+                    data: { pin: x },
+                    url: "http://localhost:90/getItem",
+                    type: 'get',
+                    dataType: "json",
+                    success: (output) => {
+                        if (output.status) {
+                            for (let i = 0; i < output.row.length; i++) {
+                                $("#msg").text($("#msg").text + "<br>" + output.row[i]);
+                            }
+                            // $("#area").val(output.row.AREA);
+                            // $("#msg").text("Pincode found");
+                        } else {
+                            $("#pin").val("");
+                            $("#area").val("");
+                            $("#msg").text("Pincode NOT found");
+                        }
+                    },
+                    error: (error) => {
+                        console.log(error.status);
+                        $("#msg").text("Error");
+                    }
+                }
+                $.ajax(ajaxParameters);
+            });
+
+        });
+    </script>
+
+</head>
+
+<body>
+    <br /><br />
+    <input type="text" name="" id="pin" placeholder="Pincode"><br /><br />
+    <input type="text" name="" id="area" placeholder="Area"><br />
+    <p id="msg"></p>
+</body>
+
+</html>

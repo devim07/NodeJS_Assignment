@@ -1,0 +1,110 @@
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <title>Document</title>
+    <script>
+        $(() => {
+            let anum = $("#anum").val();
+            let bal = $("#bal").val();
+
+            $("#anum").blur(() => {
+                console.log("blur event");
+                let anum = $("#anum").val();
+
+                let ajaxParameters = {
+                    data: { anum: anum },
+                    url: "http://localhost:80/getItem",
+                    type: 'get',
+                    dataType: "json",
+                    success: (output) => {
+                        if (output.status) {
+                            $("#bal").val(output.row.BAL);
+                            $("#msg").text("Account number exist!!");
+                        } else {
+                            $("#anum").val("");
+                            $("#bal").val("");
+                            $("#msg").text("Account number " + anum + " does not exist!!");
+                        }
+                    },
+                    error: (error) => {
+                        $("#anum").val("");
+                        $("#bal").val("");
+                        $("#msg").text("error in connection: " + error.status);
+                        console.log(error);
+                    }
+                };
+                $.ajax(ajaxParameters);
+            });
+
+
+            $("#update").click(() => {
+                let anum = $("#anum").val();
+                let bal = $("#bal").val();
+
+                let ajaxParameters = {
+                    data: { anum: anum, bal: bal },
+                    url: "http://localhost:80/update",
+                    type: 'get',
+                    dataType: "json",
+                    success: (output) => {
+                        if (output.status) {
+                            $("#anum").val("");
+                            $("#bal").val("");
+                            $("#msg").text("Account no. " + anum + " updated successfully");
+                            console.log("update successful");
+                        }
+                    },
+                    error: (error) => {
+                        $("#anum").val("");
+                        $("#bal").val("");
+                        $("#msg").text("error in connection: " + error.status);
+                        console.log(error);
+                    }
+                };
+                $.ajax(ajaxParameters);
+            });
+
+
+            $("#display").click(() => {
+                let ajaxParameters = {
+                    data: { anum: anum, bal: bal },
+                    url: "http://localhost:80/display",
+                    type: 'get',
+                    dataType: "json",
+                    success: (output) => {
+                        console.log(output);
+                        if (output.status) {
+                            let itemscontents = "";
+                            for (let i = 0; i < output.row.length; i++) {
+                                itemscontents += "<br />" + "Acc No: " + output.row[i].ANUM + "--> Balance: " + output.row[i].BAL;
+                            }
+                            $("#all").text(itemscontents);
+                        } else {
+                            $("#msg").text("table is empty");
+                        }
+                    },
+                    error: (error) => {
+                        $("#msg").text("error contacting the server");
+                    }
+                };
+                $.ajax(ajaxParameters);
+            });
+
+
+        });//dom
+    </script>
+</head>
+
+<body>
+    <br /><br />
+    <input type="text" id="anum" placeholder="Acc. No.">
+    <span id="msg"></span><br /><br />
+    <input type="text" placeholder="Balance" id="bal"><br /><br />
+    <input type="button" value="Add" id="add">
+    <input type="button" value="Update" id="update">
+    <input type="button" value="Display" id="display">
+    <p id="all"></p>
+</body>
+
+</html>
