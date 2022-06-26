@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palindrome or Reverse</title>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const calc = document.querySelector("#calc");
+            calc.addEventListener('click', () => {
+                const str = document.querySelector("#str").value;
+                answer = palirev(str);
+
+                if (document.querySelector("#cpali").checked == true)
+                    document.querySelector("#pali").innerText = answer.pali;
+                else
+                    document.querySelector("#pali").innerText = "not selected";
+
+                if (document.querySelector("#crev").checked == true)
+                    document.querySelector("#rev").innerText = answer.rev;
+                else
+                    document.querySelector("#rev").innerText = "not selected";
+
+                function palirev(str) {
+                    str = str.toLowerCase();
+                    ans = {};
+                    ans.rev = str.split("").reverse().join("");
+                    if (ans.rev == str)
+                        ans.pali = "Yes";
+                    else
+                        ans.pali = "No";
+                    return ans;
+                }
+            });
+        });
+    </script>
+
+    <style>
+        #cont>* {
+            padding: 5px 5px;
+            margin: 5px 5px;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+
+<body style="margin: 30px 30px;">
+    <image src="../img/jun04_2.png.png" width="70%"></image>
+    <br><br>
+    <div id="cont">
+        <input type="text" id="str" placeholder="Enter a word">
+        <br>
+
+        <input type="checkbox" id="cpali">
+        <label for="cpali">Palindrome: </label>
+        <span id="pali">nil</span>
+        <br>
+
+        <input type="checkbox" id="crev">
+        <label for="crev">Reverse: </label>
+        <span id="rev">nil</span>
+        <br>
+
+        <button id="calc" style="text-align: center; width: 100px;">Calculate</button>
+    </div>
+</body>
+
+</html>

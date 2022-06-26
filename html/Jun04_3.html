@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #cont>* {
+            padding: 5px 5px;
+            margin: 5px 5px;
+            font-size: 1.1em;
+        }
+    </style>
+
+    <script>
+        class Account {
+            constructor(accno, bal, pin, email) {
+                this.accno = accno;
+                this.bal = bal;
+                this.pin = pin;
+                this.email = email;
+            }
+        }
+
+        class Logi {
+            constructor() {
+                this.acc = [
+                    new Account(1, 10, 11, "A@B.com"),
+                    new Account(2, 20, 21, "C@D.COM")
+                ]
+            }
+
+            findAcc(inAccno) {
+                for (let i = 0; i < this.acc.length; i++) {
+                    if (this.acc[i].accno == inAccno) {
+                        return { status: "true", account: this.acc[i] };
+                    }
+                }
+                return { status: "false", account: {} };
+            }
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            console.log("Window loaded successfully");
+            let logi = new Logi();
+            const accno = document.querySelector("#accno");
+            accno.addEventListener("blur", () => {
+                let inAccno = accno.value;
+                let output = logi.findAcc(inAccno);
+                if (output.status == "true") {
+                    document.querySelector("#bal").value = output.account.bal;
+                    document.querySelector("#pin").value = output.account.pin;
+                    document.querySelector("#email").value = output.account.email;
+                } else {
+                    document.querySelector("#msg").innerHTML = "Account number not found";
+                    document.querySelector("#bal").value = "";
+                    document.querySelector("#pin").value = "";
+                    document.querySelector("#email").value = "";
+                }
+            });
+        });
+
+    </script>
+</head>
+
+
+<body style="margin-left: 50px;">
+    <image src="../img/jun04_3.png.png" width="70%"></image><br><br>
+    <div id="cont">
+        <input type="text" placeholder="Account Number" id="accno">
+        <span id="msg"></span><br>
+        <input type="text" placeholder="Balance" id="bal"><br>
+        <input type="text" placeholder="Pin" id="pin"><br>
+        <input type="text" placeholder="E-mail" id="email"><br>
+    </div>
+
+</body>
+
+</html>

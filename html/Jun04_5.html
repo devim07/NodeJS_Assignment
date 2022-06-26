@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Area and Perimeter Calculator</title>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const calc = document.querySelector("#calc");
+            calc.addEventListener('click', () => {
+                let rect = { len: document.querySelector("#len").value, bre: document.querySelector("#bre").value }
+                let answer = areaperi(rect);
+
+                if (document.querySelector("#cala").checked == true)
+                    document.querySelector("#area").innerText = answer.area;
+                else
+                    document.querySelector("#area").innerText = "not selected";
+
+                if (document.querySelector("#calp").checked == true)
+                    document.querySelector("#peri").innerText = answer.peri;
+                else
+                    document.querySelector("#peri").innerText = "not selected";
+
+                function areaperi(rect) {
+                    ans = {};
+                    ans.area = rect.len * rect.bre;
+                    ans.peri = 2 * (parseFloat(rect.len) + parseFloat(rect.bre));
+                    return ans;
+                }
+            });
+        });
+    </script>
+    <style>
+        #cont>* {
+            padding: 5px 5px;
+            margin: 5px 5px;
+            font-size: 1em;
+        }
+    </style>
+</head>
+
+<body style="margin: 30px 30px;">
+    <img src="../img/jun04_5.png.png" alt="June 4 Question 5" style="width: 70%;">
+    <br><br><br>
+    <div id="cont" style="margin-left: 50px;">
+        <input type="number" id="len" placeholder="length">
+        Area is
+        <span id="area">x</span>
+        <br>
+        <input type="number" id="bre" placeholder="breadth">
+        Perimeter is
+        <span id="peri">y</span>
+        <br>
+        <input type="checkbox" id="cala">
+        <label for="cala">Area</label>
+        <input type="checkbox" id="calp">
+        <label for="calp">Perimeter</label>
+        <br>
+        <button id="calc" style="text-align: center; width: 100px;">Calculate</button>
+    </div>
+</body>
+
+</html>

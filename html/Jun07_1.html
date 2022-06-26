@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number add delete vies</title>
+
+    <style>
+        #cont>* {
+            padding: 5px 5px;
+            margin: 5px 5px;
+            font-size: 1.1em;
+        }
+
+        button {
+            width: 100px;
+        }
+    </style>
+
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            const add = document.querySelector("#add");
+            const del = document.querySelector("#del");
+            const edit = document.querySelector("#edit");
+            const view = document.querySelector("#view");
+            const odd = document.querySelector("#odd");
+            const ele = document.querySelector("#ele");
+            const inp = document.querySelector("#inp");
+            const msg = document.querySelector("#msg");
+            console.log("Page Loaded");
+            let arr = [10, 20, 30, 40, 50, 60, 70];
+
+            function check(num) {
+                let output = { found: false, index: -1, number: {} }
+                for (let i = 0; i < arr.length; i++) {
+                    if (num == arr[i]) {
+                        output = { found: true, index: i, number: arr[i] }
+                    }
+                }
+                return output;
+            }
+
+            inp.addEventListener("blur", () => {
+                let output = check(inp.value);
+                view.disabled = true;
+                odd.disabled = true;
+                ele.innerHTML = "";
+                if (output.found) {
+                    add.disabled = true;
+                    edit.disabled = false;
+                    del.disabled = false;
+                    msg.innerHTML = "Number Found";
+                } else {
+                    add.disabled = false;
+                    edit.disabled = true;
+                    del.disabled = true;
+                    msg.innerHTML = "Number Not Found";
+                }
+            });
+
+            add.addEventListener("click", () => {
+                let output = check(inp.value);
+                add.disabled = true;
+                edit.disabled = false;
+                del.disabled = true;
+                view.disabled = false;
+                odd.disabled = false;
+                ele.innerHTML = "";
+                if (output.found == false) {
+                    arr.push(inp.value);
+                    msg.innerHTML = "Number Added Successfully";
+                } else
+                    msg.innerHTML = "Number already exist";
+            });
+
+            edit.addEventListener("click", () => {
+                add.disabled = true;
+                edit.disabled = false;
+                del.disabled = false;
+                view.disabled = false;
+                odd.disabled = false;
+                ele.innerHTML = "";
+                let x = window.prompt("Enter the new number");
+                let output = check(inp.value);
+                let newoutput = check(x);
+                if (newoutput.found == false) {
+                    arr[output.index] = x;
+                    msg.innerHTML = "Number edited succefully";
+                    inp.value = x;
+                } else {
+                    msg.innerHTML = "Number entered already exist";
+                }
+            });
+
+            del.addEventListener("click", () => {
+                add.disabled = true;
+                edit.disabled = true;
+                del.disabled = true;
+                view.disabled = false;
+                odd.disabled = false;
+                ele.innerHTML = "";
+                let output = check(inp.value);
+                console.log(inp.value);
+                if (output.found == true) {
+                    arr.splice(output.index, 1);
+                    msg.innerHTML = "Number Deleted successfully";
+                    inp.value = "";
+                } else
+                    msg.innerHTML = "Number Not Found. Cant be deleted";
+            });
+
+            view.addEventListener("click", () => {
+                add.disabled = true;
+                edit.disabled = true;
+                del.disabled = true;
+                view.disabled = false;
+                odd.disabled = false;
+                let a = "";
+                for (let i = 0; i < arr.length; i++)
+                    a += ("  " + arr[i]);
+                ele.innerHTML = a;
+            });
+
+            odd.addEventListener("click", () => {
+                add.disabled = true;
+                edit.disabled = true;
+                del.disabled = true;
+                view.disabled = false;
+                odd.disabled = false;
+                let a = "";
+                for (let i = 1; i < arr.length; i = i + 2)
+                    a += ("  " + arr[i]);
+                ele.innerHTML = a;
+            });
+        });
+    </script>
+</head>
+
+
+<body style="margin-left: 50px;">
+    <div id="cont">
+        <p id="msg"></p>
+        <br>
+        <input id="inp" type="text" place holder="Enater any number"><br>
+        <button disabled id="add">Add</button>
+        <button disabled id="del">Delete</button>
+        <button disabled id="edit">Edit</button>
+        <button disabled id="view">View All</button>
+        <button disabled id="odd">View Odd</button><br>
+        <span id="ele"></span>
+        <br><br><br>
+    </div>
+    <image src="../img/jun07_1.png" alt="June 7 Question 1" width="60%"></image>
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Userid=Password</title>
+    <style>
+        #cont>* {
+            padding: 5px 5px;
+            margin: 5px 5px;
+            font-size: 1.1em;
+        }
+    </style>
+
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            console.log("Page Loaded Successfully");
+            const butn = document.querySelector("#butn");
+            butn.addEventListener("click", () => {
+                if (document.querySelector("#uid").value == document.querySelector("#pass").value) {
+                    window.alert("Login Successfull!!");
+                } else {
+                    window.alert("User name & Password missmatch.Login Failed");
+                }
+            });
+
+        });
+    </script>
+</head>
+
+
+<body style="margin-left: 50px;">
+    <image src="../img/jun06_1.png.png" width="70%"></image><br><br>
+    <div id="cont">
+        <input type="text" id="uid" placeholder="User Name">
+        <input type="password" id="pass" placeholder="Password">
+        <button type="button" id="butn">Sign-In</button>
+    </div>
+</body>
+
+</html>

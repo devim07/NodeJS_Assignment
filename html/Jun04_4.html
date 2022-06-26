@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Deatils</title>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const tempno = document.querySelector("#tempno");
+            tempno.addEventListener('blur', () => {
+                let empo = { dept: 3, loc: "Pune" };
+                let empe = { dept: 2, loc: "Mumbai" };
+
+                const givenempno = tempno.value;
+                console.log(givenempno)
+                if (givenempno == '0') {
+                    document.querySelector("#msg").innerHTML = "Employee details not found!!";
+                    document.querySelector("#tdept").value = "";
+                    document.querySelector("#tloc").value = "";
+                }
+                else if (givenempno % 2 == 0) {
+                    document.querySelector("#tdept").value = empe.dept;
+                    document.querySelector("#tloc").value = empe.loc;
+                }
+                else if (givenempno % 2 == 1) {
+                    document.querySelector("#tdept").value = empo.dept;
+                    document.querySelector("#tloc").value = empo.loc;
+                }
+            });
+        });
+    </script>
+
+    <style>
+        #cont>* {
+            padding: 5px 5px;
+            margin: 5px 5px;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+
+<body style="margin: 30px 30px;">
+    <image src="../img/jun04_4.png.png" alt="June 4 Question 4" style="width: 70%;"></image>
+    <br> <br>
+    <div id="cont" style="margin-left: 100px;">
+        <input type="text" id="tempno" placeholder="Employee Number" style="width:200px; text-align:ceter;">
+        <span id="msg"></span>
+        <br>
+
+        <input type="text" id="tdept" placeholder="Department ID" style="width:200px; text-align:ceter;">
+        <br>
+
+        <input type="text" id="tloc" placeholder="Location" style="width:200px; text-align:ceter;">
+        <br>
+    </div>
+</body>
+
+</html>

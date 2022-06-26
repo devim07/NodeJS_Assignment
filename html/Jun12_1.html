@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change text decoration as selected</title>
+    <style>
+        #cont>* {
+            padding: 5px 5px;
+            margin: 5px 5px;
+            font-size: 1.1em;
+        }
+
+        .r {
+            color: red;
+        }
+
+        .u {
+            text-decoration: underline;
+        }
+    </style>
+
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            console.log("Window loaded");
+            const msg = document.querySelector("#msg");
+            const red = document.querySelector("#red");
+            const line = document.querySelector("#line");
+            const apply = document.querySelector("#apply");
+
+            apply.addEventListener("click", () => {
+                console.log("Click even registered");
+                console.log(red.checked);
+                if (red.checked) {
+                    msg.classList.add("r");
+                } else {
+                    //msg.classList.remove("r");
+                }
+                if (line.checked) {
+                    msg.classList.add("u");
+                } else {
+                    msg.classList.remove("u");
+                }
+            });
+        });
+    </script>
+</head>
+
+
+<body style="margin-left: 50px;">
+    <div class="cont">
+        <p id="msg">Hello text</p>
+        <input type="checkbox" id="red">
+        <label for="red">Make it Red</label>
+        <input type="checkbox" id="line">
+        <label for="line">Make it Underlined</label><br><br>
+        <button id="apply">apply</button><br><br>
+    </div>
+    <image src="../img/jun12_1.png" alt="June 12 Question 1" width="70%"></image>
+</body>
+
+</html>

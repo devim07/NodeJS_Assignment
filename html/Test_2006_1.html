@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devi Test Q-1</title>
+
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            console.log("Page Load success");
+            const num = document.querySelector("#num");
+            const msg = document.querySelector("#msg");
+
+            num.addEventListener("blur", () => {
+                let x = num.value;
+                console.log("Blur event with value: ", x)
+                if (x % 2 == 0)
+                    msg.innerHTML = "Even";
+                else
+                    msg.innerHTML = "Odd";
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h1>Question - 1</h1>
+    <hr>
+    <input type="text" id="num" placeholder="Enter Number" style="height: 30px; font-size: 20px;">
+    <span id="msg" style="font-size: 20px;">Message</span>
+    <br><br><br><br><br><br><br>
+    <image src="../img/Test_2006_1.png" alt="June 20 Test Question 1" width="40%" style="border: 3px solid black;">
+    </image>
+</body>
+
+</html>

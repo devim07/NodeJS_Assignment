@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capitalise the content</title>
+
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            const but = document.querySelector("#but");
+            console.log("Loading Successful")
+            but.addEventListener("click", () => {
+                let inp = document.querySelector("#in").value;
+                let msg = document.querySelector("#msg");
+                if (inp == "") {
+                    msg.innerHTML = "No content added";
+                } else {
+                    msg.innerHTML = inp.toUpperCase();
+                }
+                console.log("Conversion complete");
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div>
+        <img src="../img/jun11_1.png.png" alt="June 11 Question 1" class="ques" width="70%">
+        <br><br>
+    </div>
+    <div style="margin-left: 40px;">
+        <input type="text" id="in" placeholder="Enter Any Text" style="padding: 5px 5px;">
+        <span id="msg"></span><br><br>
+        <button id="but" style="padding: 5px 5px;">Capitalize</button>
+    </div>
+</body>
+
+</html>

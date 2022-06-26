@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repaet text in box ouside it</title>
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            console.log("Page loading successful");
+            const inp = document.querySelector("#inp");
+            const butn = document.querySelector("#press");
+            let msg = document.querySelector("#msg");
+            butn.addEventListener("click", () => {
+                if (inp.value == "") {
+                    msg.innerHTML = "No Content Entered";
+                } else {
+                    msg.innerHTML = inp.value;
+                }
+                console.log("Event Successful");
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div>
+        <img src="../img//jun11_2.png.png" alt="June 11 Question 2" style="width: 80%;">
+        <br><br>
+    </div>
+
+    <div style="margin-left: 40px;">
+        <p>I dont know anythhing</p>
+        <input type="text" id="inp" placeholder="Enter some text" style="padding: 5px 5px;">
+        <span id="msg"></span>
+        <br><br>
+        <input type="button" value="Press Here" id="press" style="padding: 5px 5px;">
+    </div>
+
+</body>
+
+</html>

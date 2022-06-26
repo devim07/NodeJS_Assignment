@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item- Blur, Update, Delete, CLear, View All</title>
+    <style>
+        #cont>* {
+            padding: 5px 5px;
+            margin: 5px 5px;
+            font-size: 1.1em;
+        }
+    </style>
+
+    <script>
+        class Product {
+            constructor(ino, qty, price) {
+                this.ino = ino;
+                this.price = price;
+                this.qty = qty;
+            }
+        }
+
+        class Logi {
+            constructor() {
+                this.prod = [
+                    new Product(1, 100, 500),
+                    new Product(2, 50, 700),
+                    new Product(3, 70, 600),
+                    new Product(4, 100, 650),
+                    new Product(5, 60, 800)
+                ]
+            }
+
+            checkEle(inp) {
+                let output = { found: false, index: -1, item: "" };
+                for (let i = 0; i < this.prod.length; i++) {
+                    if (this.prod[i].ino == inp) {
+                        output.found = true;
+                        output.item = this.prod[i];
+                        output.index = i;
+                        break;
+                    }
+                }
+                return output;
+            }
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            let logi = new Logi();
+            console.log("Page Loaded Successfully");
+            const ino = document.querySelector("#ino");
+            const qty = document.querySelector("#qty");
+            const price = document.querySelector("#price");
+            const update = document.querySelector("#update");
+            const del = document.querySelector("#delete");
+            const clear = document.querySelector("#clear");
+            const view = document.querySelector("#view");
+            const msg = document.querySelector("#msg");
+            const allItem = document.querySelector("#all");
+
+            function clearBox() {
+                ino.value = "";
+                qty.value = "";
+                price.value = "";
+            }
+
+            function displayAll() {
+                let list = "";
+                for (let i = 0; i < logi.prod.length; i++) {
+                    list += (logi.prod[i].ino + "==>" + logi.prod[i].qty + "==>" + logi.prod[i].price + "------");
+                }
+                console.log(list);
+                allItem.innerHTML = list;
+            }
+
+            ino.addEventListener("blur", () => {
+                msg.innerHTML = "";
+                let inp = ino.value;
+                let output = logi.checkEle(inp);
+                if (output.found == true) {
+                    qty.value = output.item.qty;
+                    price.value = output.item.price;
+                    update.disabled = false;
+                    del.disabled = false;
+                    clear.disabled = false;
+                } else {
+                    msg.innerHTML = "Item Not Found!"
+                    clearBox();
+                    update.disabled = true;
+                    del.disabled = true;
+                    clear.disabled = true;
+                }
+            });
+
+
+            update.addEventListener("click", () => {
+                let inp = ino.value;
+                let output = logi.checkEle(inp);
+                console.log("before update: ");
+                console.log(logi.prod[output.index]);
+                logi.prod[output.index].ino = ino.value;
+                logi.prod[output.index].price = price.value;
+                logi.prod[output.index].qty = qty.value;
+                console.log("after update: ");
+                console.log(logi.prod[output.index]);
+                msg.innerHTML = "Update Successful";
+                displayAll();
+            });
+
+
+            del.addEventListener("click", () => {
+                let inp = ino.value;
+                let output = logi.checkEle(inp);
+                logi.prod.splice(output.index, 1);
+                msg.innerHTML = "Item No." + inp + " Deleted!"
+                clearBox();
+                console.log("Item No. " + output.index + " Delete Successful");
+                update.disabled = true;
+                del.disabled = true;
+                clear.disabled = true;
+                displayAll();
+            });
+
+
+            clear.addEventListener("click", () => {
+                clearBox();
+                update.disabled = true;
+                del.disabled = true;
+                clear.disabled = true;
+                allItem.innerHTML = "";
+                msg.innerHTML = "";
+            });
+
+
+            view.addEventListener("click", () => {
+                displayAll();
+                msg.innerHTML = "";
+            });
+
+
+        });
+    </script>
+</head>
+
+
+<body style="margin-left: 50px;">
+    <image src="../img/jun06_2.png.png" width="70%"></image>
+    <br><br>
+    <div id="cont">
+        <input type="text" id="ino" placeholder="Item No.">
+        <span id="msg"></span><br>
+        <input type="text" id="qty" placeholder="Quantity"><br>
+        <input type="text" id="price" placeholder="Price"><br>
+        <button disabled id="update">Update</button>
+        <button disabled id="delete">Delete</button>
+        <button disabled id="clear">Clear</button>
+        <button id="view">View All</button><br><br>
+        <span id="all" style="font-weight: bold;">Item No ==> Quantity ==> Price</span>
+    </div>
+</body>
+
+</html>
